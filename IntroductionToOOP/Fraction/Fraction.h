@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<iostream>
 using namespace std;
 using std::cin;
@@ -8,18 +8,18 @@ using std::endl;
 
 
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
-/// ////////////////////////    CLASS DECLARACTION (ÎÁÚßÂËÅÍÈÅ ÊËÀÑÑÀ)               //////////////
+/// ////////////////////////    CLASS DECLARACTION (ÐžÐ‘ÐªÐ¯Ð’Ð›Ð•ÐÐ˜Ð• ÐšÐ›ÐÐ¡Ð¡Ð)               //////////////
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
 
-class Fraction;	//Ïðîñòî îáúÿâëåíèå êëàññà
+class Fraction;	//ÐŸÑ€Ð¾ÑÑ‚Ð¾ Ð¾Ð±ÑŠÑÐ²Ð»ÐµÐ½Ð¸Ðµ ÐºÐ»Ð°ÑÑÐ°
 Fraction operator*(Fraction left, Fraction right);
 Fraction operator/(Fraction left, Fraction right);
 
-class Fraction	//Îáúÿâëåíèå è îïèñàíèå êëàññà
+class Fraction	//ÐžÐ±ÑŠÑÐ²Ð»ÐµÐ½Ð¸Ðµ Ð¸ Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ðµ ÐºÐ»Ð°ÑÑÐ°
 {
-	int integer;		//Öåëàÿ ÷àñòü
-	int numerator;		//×èñëèòåëü
-	int denominator;	//Çíàìåíàòåëü
+	int integer;		//Ð¦ÐµÐ»Ð°Ñ Ñ‡Ð°ÑÑ‚ÑŒ
+	int numerator;		//Ð§Ð¸ÑÐ»Ð¸Ñ‚ÐµÐ»ÑŒ
+	int denominator;	//Ð—Ð½Ð°Ð¼ÐµÐ½Ð°Ñ‚ÐµÐ»ÑŒ
 public:
 	int get_integer()const;
 	int get_numerator()const;
@@ -57,5 +57,5 @@ public:
 istream& operator>>(istream& is, Fraction& obj);
 ostream& operator<<(ostream& os, const Fraction& obj);
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
-/// ////////////////////////    CLASS DECLARACTION END (ÊÎÍÅÖ ÎÁÚßÂËÅÍÈß ÊËÀÑÑÀ)     //////////////
+/// ////////////////////////    CLASS DECLARACTION END (ÐšÐžÐÐ•Ð¦ ÐžÐ‘ÐªÐ¯Ð’Ð›Ð•ÐÐ˜Ð¯ ÐšÐ›ÐÐ¡Ð¡Ð)     //////////////
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
