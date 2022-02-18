@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WORNINGS
+ï»¿#define _CRT_SECURE_NO_WORNINGS
 #define _USE_MATH_DEFINES
 #include<iostream>
 #include<Windows.h>
@@ -76,8 +76,8 @@ namespace Geometry
 
 		void info()const
 		{
-			cout << "Ïëîùàäü ôèãóðû: " << get_area() << endl;
-			cout << "Ïåðèìåòð ôèãóðû: " << get_perimeter() << endl;
+			cout << "ÐŸÐ»Ð¾Ñ‰Ð°Ð´ÑŒ Ñ„Ð¸Ð³ÑƒÑ€Ñ‹: " << get_area() << endl;
+			cout << "ÐŸÐµÑ€Ð¸Ð¼ÐµÑ‚Ñ€ Ñ„Ð¸Ð³ÑƒÑ€Ñ‹: " << get_perimeter() << endl;
 			draw();
 		}
 	};
@@ -128,7 +128,7 @@ namespace Geometry
 		void info()const
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Äëèíà ñòîðîíû:" << side << endl;
+			cout << "Ð”Ð»Ð¸Ð½Ð° ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñ‹:" << side << endl;
 			Shape::info();
 		}
 	};
@@ -174,8 +174,8 @@ namespace Geometry
 		}
 		void draw()const
 		{
-			HWND hwnd = GetConsoleWindow(); //ïîëó÷àåì îêíî
-			HDC hdc = GetDC(hwnd); //ïîëó÷åíèå êîíòåêñòà óñòðîéñòâà
+			HWND hwnd = GetConsoleWindow(); //Ð¿Ð¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ð¾ÐºÐ½Ð¾
+			HDC hdc = GetDC(hwnd); //Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ ÐºÐ¾Ð½Ñ‚ÐµÐºÑÑ‚Ð° ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð°
 			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
 			HBRUSH hBrush = CreateSolidBrush(color);
 			SelectObject(hdc, hPen);
@@ -189,8 +189,8 @@ namespace Geometry
 		void info()
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Øèðèíà ïðÿìîóãîëüíèêà" << width << endl;
-			cout << "äëèíà ïðÿìîóãîëíèêà" << length << endl;
+			cout << "Ð¨Ð¸Ñ€Ð¸Ð½Ð° Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°" << width << endl;
+			cout << "Ð´Ð»Ð¸Ð½Ð° Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»Ð½Ð¸ÐºÐ°" << length << endl;
 			Shape::info();
 			draw();
 		}
@@ -247,8 +247,8 @@ namespace Geometry
 		void info()const
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Ðàäèóñ êðóãà: " << get_radius() << endl;
-			cout << "äèàìåòð êðóãà: " << get_diameter() << endl;
+			cout << "Ð Ð°Ð´Ð¸ÑƒÑ ÐºÑ€ÑƒÐ³Ð°: " << get_radius() << endl;
+			cout << "Ð´Ð¸Ð°Ð¼ÐµÑ‚Ñ€ ÐºÑ€ÑƒÐ³Ð°: " << get_diameter() << endl;
 			Shape::info();
 			draw();
 		}
@@ -319,8 +319,8 @@ namespace Geometry
 		void info()const
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Ñîòîðîíà òðåóãîëüíèêà: " << get_side() << endl;
-			cout << "Âûñîòà òðåóãîëüíèêà: " << get_height() << endl;
+			cout << "Ð¡Ð¾Ñ‚Ð¾Ñ€Ð¾Ð½Ð° Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°: " << get_side() << endl;
+			cout << "Ð’Ñ‹ÑÐ¾Ñ‚Ð° Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°: " << get_height() << endl;
 			Shape::info();
 			draw();
 		}
@@ -393,10 +393,10 @@ namespace Geometry
 		void info()const
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Îñíîâàíèå òðåóãîëüíèêà: " << get_base() << endl;
-			cout << "óãîë òðåóãîëüíèêà: " << get_base_angle() << endl;
-			cout << "Ñòîðîíà òðåóãîëüíèêà: " << get_side() << endl;
-			cout << "Âûñîòà òðåóãîëüíèêà: " << get_height() << endl;
+			cout << "ÐžÑÐ½Ð¾Ð²Ð°Ð½Ð¸Ðµ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°: " << get_base() << endl;
+			cout << "ÑƒÐ³Ð¾Ð» Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°: " << get_base_angle() << endl;
+			cout << "Ð¡Ñ‚Ð¾Ñ€Ð¾Ð½Ð° Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°: " << get_side() << endl;
+			cout << "Ð’Ñ‹ÑÐ¾Ñ‚Ð° Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°: " << get_height() << endl;
 			Shape::info();
 			draw();
 		}
