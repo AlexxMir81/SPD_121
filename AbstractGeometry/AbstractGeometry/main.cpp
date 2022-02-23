@@ -133,6 +133,74 @@ namespace Geometry
 		}
 	};
 
+	class Rhomb : public Square
+	{
+		double angle;
+	public:
+		double get_height()const
+		{
+			return sin(angle * M_PI / 180) * get_side();
+		}
+		double get_angle()const
+		{
+			return this->angle;
+		}
+		double get_offset()const
+		{
+			return get_side() * sin((90 - get_angle()) * M_PI / 180);
+		}
+		void set_angle(double angle)
+		{
+			this->angle = angle;
+		}
+		Rhomb(double angle, double side, unsigned int start_x, unsigned int start_y, unsigned int line_width, Color color) :
+			Square(side, start_x, start_y, line_width, color)
+		{
+			set_angle(angle);
+		}
+		~Rhomb() {};
+		double get_area()const
+		{
+			return get_side() * get_height();
+		}
+		double get_perimeter()const
+		{
+			return get_side() * 4;
+		}
+		void draw()const
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+
+			POINT points[] =
+			{
+				{start_x, start_y + get_height()},
+				{start_x + get_side(), start_y + get_height()},
+				{start_x + get_side() + get_offset(), start_y},
+				{start_x + get_offset(), start_y}
+			};
+			Polygon(hdc, points, sizeof(points) / sizeof(POINT));
+
+			DeleteObject(hPen);
+			DeleteObject(hBrush);
+			ReleaseDC(hwnd, hdc);
+		}
+
+		void info()const
+		{
+			cout << typeid(*this).name() << endl;
+			cout << "Сторона ромба: " << get_side() << endl;
+			cout << "Угол ромба: " << get_angle() << endl;
+			cout << "Высота ромба: " << get_height() << endl;
+			Shape::info();
+			draw();
+		}
+	};
+
 	class Rectangle : public Shape
 	{
 		double width;
@@ -195,6 +263,152 @@ namespace Geometry
 			draw();
 		}
 
+	};
+
+	class Parallelogram : public Rectangle
+	{
+		double angle;
+	public:
+		double get_height()const
+		{
+			return sin(angle * M_PI / 180) * get_length();
+		}
+		double get_angle()const
+		{
+			return this->angle;
+		}
+		double get_offset()const
+		{
+			return get_length() * sin((90 - get_angle()) * M_PI / 180);
+		}
+		void set_angle(double angle) 
+		{
+			this->angle = angle;
+		}
+		Parallelogram(double angle, double width, double length, unsigned int start_x, unsigned int start_y, unsigned int line_width, Color color) :
+			Rectangle(width, length, start_x, start_y, line_width, color)
+		{
+			set_angle(angle);
+		}
+		~Parallelogram() {};
+		double get_area()const
+		{
+			return get_width() * get_height();
+		}
+		double get_perimeter()const
+		{
+			return (get_width() + get_length()) * 2;
+		}
+		void draw()const
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+
+			POINT points[] =
+			{
+				{start_x, start_y + get_height()},
+				{start_x + get_width(), start_y + get_height()},
+				{start_x + get_width() + get_offset(), start_y},
+				{start_x + get_offset(), start_y}
+			};
+			Polygon(hdc, points, sizeof(points) / sizeof(POINT));
+
+			DeleteObject(hPen);
+			DeleteObject(hBrush);
+			ReleaseDC(hwnd, hdc);
+		}
+
+		void info()const
+		{
+			cout << typeid(*this).name() << endl;
+			cout << "Ширина параллелограмма: " << get_width() << endl;
+			cout << "Длина параллелограмма: " << get_length() << endl;
+			cout << "Угол параллелограмма: " << get_angle() << endl;
+			cout << "Высота параллелограмма: " << get_height() << endl;
+			Shape::info();
+			draw();
+		}
+	};
+
+	class Trapezoid : public Parallelogram
+	{
+		double opposite_angle;
+	public:
+		double get_opposite_angle()const
+		{
+			return this->opposite_angle;
+		}
+		double get_opposite_length()const
+		{
+			return get_height() / sin(get_opposite_angle() * M_PI / 180);
+		}
+		double get_opposite_offset()const
+		{
+			return get_opposite_length() * sin((90 - get_opposite_angle()) * M_PI / 180);
+		}
+		double get_opposite_width()const
+		{
+			return get_width() - get_offset() - get_opposite_offset();
+		}
+		void set_opposite_angle(double angle)
+		{
+			if (get_opposite_width() <= 0)angle = 90;
+			this->opposite_angle = angle;
+		}
+		Trapezoid(double opposite_angle, double angle, double width, double length, unsigned int start_x, unsigned int start_y, unsigned int line_width, Color color) :
+			Parallelogram(angle, width, length, start_x, start_y, line_width, color)
+		{
+			set_opposite_angle(opposite_angle);
+		}
+		~Trapezoid() {};
+		double get_area()const
+		{
+			return ((get_width() + get_opposite_width())/2) * get_height();
+		}
+		double get_perimeter()const
+		{
+			return get_width() + get_length() + get_opposite_width() + get_opposite_length();
+		}
+		void draw()const
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+
+			POINT points[] =
+			{
+				{start_x, start_y + get_height()},
+				{start_x + get_width(), start_y + get_height()},
+				{start_x + get_opposite_width() + get_offset(), start_y},
+				{start_x + get_offset(), start_y}
+			};
+			Polygon(hdc, points, sizeof(points) / sizeof(POINT));
+
+			DeleteObject(hPen);
+			DeleteObject(hBrush);
+			ReleaseDC(hwnd, hdc);
+		}
+
+		void info()const
+		{
+			cout << typeid(*this).name() << endl;
+			cout << "Ширина нижнего основания трапеции: " << get_width() << endl;
+			cout << "Ширина верхнего основания трапеции: " << get_opposite_width() << endl;
+			cout << "Длина трапеции слева: " << get_length() << endl;
+			cout << "Длина трапеции справа: " << get_opposite_length() << endl;
+			cout << "Угол трапеции слева: " << get_angle() << endl;
+			cout << "Угол трапеции справа: " << get_opposite_angle() << endl;
+			cout << "Высота трапеции: " << get_height() << endl;
+			Shape::info();
+			draw();
+		}
 	};
 
 	class Circle :public Shape
@@ -407,12 +621,18 @@ void main()
 	setlocale(LC_ALL, "");
 	Geometry::Square square(15, 100, 100, 5, Geometry::Color::console_red);
 	square.info();
-	Geometry::Rectangle rect(150, 50, 500, 100, 5, Geometry::Color::blue);
+	Geometry::Rectangle rect(150, 50, 600, 300, 5, Geometry::Color::blue);
 	rect.info();
-	Geometry::Circle circle(150, 500, 250, 5, Geometry::Color::yellow);
+	Geometry::Circle circle(150, 550, 350, 5, Geometry::Color::yellow);
 	circle.info();
-	Geometry::EquilateralTriangle eqt(380, 900, 220, 5, Geometry::Color::green);
+	Geometry::EquilateralTriangle eqt(380, 1000, 320, 5, Geometry::Color::green);
 	eqt.info();
-	Geometry::IsoscalesTriange itr(250, 65, 300, 500, 5, Geometry::Color::green);
+	Geometry::IsoscalesTriange itr(250, 65, 400, 600, 5, Geometry::Color::green);
 	itr.info();
+	Geometry::Parallelogram prg(45, 200, 100, 400, 750, 5, Geometry::Color::red);
+	prg.info();
+	Geometry::Rhomb rmb(45 ,100, 700, 750, 5, Geometry::Color::yellow);
+	rmb.info();
+	Geometry::Trapezoid trp(80, 45, 200, 100, 400, 650, 5, Geometry::Color::red);
+	trp.info();
 }
