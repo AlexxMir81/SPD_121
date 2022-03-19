@@ -1,10 +1,11 @@
-#include<iostream>
+﻿#include<iostream>
 using namespace std;
 
 #define tab "\t"
 
 class Tree
 {
+protected:
 	class Element
 	{
 		int Data;
@@ -21,7 +22,8 @@ class Tree
 			cout << "EDestructor:\t" << this << endl;
 		}
 		friend class Tree;
-	}*Root; //������ ������, ��������� �� �������� �������
+		friend class UniqueTree;
+	}*Root; //Корень дерева, указатель на корневой элемент
 public:
 	Element* getRoot()const
 	{
@@ -48,6 +50,20 @@ public:
 	int maxValue()const
 	{
 		return maxValue(Root);
+	}
+	int count()const
+	{
+		return count(Root);
+	}
+
+	int sum()const
+	{
+		return sum(Root);
+	}
+	 
+	double avg()const
+	{
+		return (double)sum(Root) / count(Root);
 	}
 
 	void print()const
@@ -90,6 +106,19 @@ private:
 		return !Root->pRight ? Root->Data : maxValue(Root->pRight);
 	}
 
+	int count(Element* Root)const
+	{
+		/*if (Root == nullptr)return 0;
+		else return count(Root->pLeft) + count(Root->pRight) + 1;*/	
+		return Root == nullptr ? 0 : count(Root->pLeft) + count(Root->pRight) + 1;
+	}
+
+	int sum(Element* Root)const
+	{
+	/*	if (Root == nullptr)return 0;
+		else return sum(Root->pLeft) + sum(Root->pRight) + Root->Data;*/
+		return Root == nullptr ? 0 : sum(Root->pLeft) + sum(Root->pRight) + Root->Data;
+	}
 	void print(Element* Root)const
 	{
 		if (Root == nullptr)return;
@@ -99,11 +128,36 @@ private:
 	}
 };
 
+class UniqueTree :public Tree
+{
+public:
+	void insert(int Data, Element* Root)
+	{
+		if (this->Root == nullptr)this->Root = new Element(Data);
+		if (Root == nullptr)return;
+		if (Data < Root->Data)
+		{
+			if (Root->pLeft == nullptr)Root->pLeft = new Element(Data);
+			else insert(Data, Root->pLeft);
+		}
+		else if (Data > Root->Data)
+		{
+			if (Root->pRight == nullptr)Root->pRight = new Element(Data);
+			else insert(Data, Root->pRight);
+		}
+	}
+public:
+	void insert(int Data)
+	{
+		insert(Data, Root);
+	}
+};
+
 void main()
 {
 	setlocale(LC_ALL, "");
 	int n;
-	cout << "������� ������ ������: "; cin >> n;
+	cout << "Введите размен дерева: "; cin >> n;
 	Tree tree;
 	for (int i = 0; i < n; i++)
 	{
@@ -111,7 +165,20 @@ void main()
 	}
 	tree.print();
 	cout << endl;
-	cout << "����������� �������� � ������: " << tree.minValue() << endl;
-	cout << "������������ �������� � ������: " << tree.maxValue() << endl;
-
+	cout << "Минимальное значение в дереве: " << tree.minValue() << endl;
+	cout << "Максимальное значение в дереве: " << tree.maxValue() << endl;
+	cout << "Количество элементов в дереве: " << tree.count() << endl;
+	cout << "Сумма элеменов дерева: " << tree.sum() << endl;
+	cout << "Среднее арифметическое: " << tree.avg() << endl;
+	
+	UniqueTree uniquetree;
+	for (int i = 0; i < n; i++)
+	{
+		uniquetree.insert(rand() % 100);
+	}
+	uniquetree.print();
+	cout << endl;
+	cout << "Минимальное значение в дереве: " << uniquetree.minValue() << endl;
+	cout << "Максимальное значение в дереве: " << uniquetree.maxValue() << endl;
+	cout << "Количество элементов в дереве: " << uniquetree.count() << endl;
 }
