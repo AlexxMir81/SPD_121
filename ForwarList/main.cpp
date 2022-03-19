@@ -234,20 +234,21 @@ public:
 	{
 		for (Element* Temp = Head; Temp->pNext; Temp = Temp->pNext)
 		{
-			for (Element* Temp2 = Temp; Temp2->pNext->pNext; Temp2 = Temp2->pNext)
+			for (Element* Temp2 = Temp; Temp2->pNext; Temp2 = Temp2->pNext)
 			{
 				//if (Temp == Temp2->pNext)continue;
 				if (Temp->Data == Temp2->pNext->Data)
 				{
-						Element* Erased = Temp2->pNext;						
-						Temp2->pNext = Temp2->pNext->pNext;
-						delete Erased;
-						size--;
+					Element* Erased = Temp2->pNext;
+					Temp2->pNext = Temp2->pNext->pNext;
+					delete Erased;
+					size--;
 					//Temp2 = Temp;
 				}
 			}
 		}
 	}
+
 
 	//     Methods
 	void print()const
