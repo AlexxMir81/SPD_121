@@ -33,8 +33,19 @@ public:
 	{
 		cout << "TConstructor:\t" << this << endl;
 	}
+	Tree(const std::initializer_list<int>& il):Tree()
+	{
+		for (int const* it = il.begin(); it != il.end(); it++)
+			insert(*it);
+	}
+	Tree(const Tree& other)
+	{
+		*this = other;
+	}
+
 	~Tree()
 	{
+		clear();
 		cout << "TDestructor:\t" << this << endl;
 	}
 
@@ -71,9 +82,39 @@ public:
 		print(Root);
 		cout << endl;
 	}
+	void clear()
+	{
+		return clear(Root);
+	}
+
+	Tree& operator=(const Tree& other)
+	{
+		if (this->Root == other.Root) return *this;
+		clear();
+		this->Root = new Element(other.Root->Data);
+		copy(other.Root->pLeft);
+		copy(other.Root->pRight);
+		cout << "CopyAssignment:\t" << this << endl;
+		return *this;
+	}
+
 
 private:
 
+	void copy(Element* Root)
+	{
+		if (Root == nullptr)return;
+		copy(Root->pLeft);
+		insert(Root->Data);
+		copy(Root->pRight);
+	}
+	void clear(Element* Root)
+	{
+		if (Root == nullptr)return;
+		clear(Root->pLeft);
+		clear(Root->pRight);
+		delete Root;
+	}
 	void insert(int Data, Element* Root)
 	{
 		if (this->Root == nullptr)this->Root = new Element(Data);
@@ -157,7 +198,7 @@ void main()
 {
 	setlocale(LC_ALL, "");
 	int n;
-	cout << "Введите размен дерева: "; cin >> n;
+	cout << "Введите размер дерева: "; cin >> n;
 	Tree tree;
 	for (int i = 0; i < n; i++)
 	{
@@ -168,7 +209,7 @@ void main()
 	cout << "Минимальное значение в дереве: " << tree.minValue() << endl;
 	cout << "Максимальное значение в дереве: " << tree.maxValue() << endl;
 	cout << "Количество элементов в дереве: " << tree.count() << endl;
-	cout << "Сумма элеменов дерева: " << tree.sum() << endl;
+	cout << "Сумма элементов дерева: " << tree.sum() << endl;
 	cout << "Среднее арифметическое: " << tree.avg() << endl;
 	
 	UniqueTree uniquetree;
@@ -181,4 +222,11 @@ void main()
 	cout << "Минимальное значение в дереве: " << uniquetree.minValue() << endl;
 	cout << "Максимальное значение в дереве: " << uniquetree.maxValue() << endl;
 	cout << "Количество элементов в дереве: " << uniquetree.count() << endl;
+	Tree tree3 = { 50, 25, 75, 16, 35 };
+	tree3.print();
+
+	tree3 = tree;
+	tree3.print();
+	Tree tree4 = tree;
+	tree4.print();
 }
