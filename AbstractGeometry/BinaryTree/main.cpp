@@ -86,17 +86,15 @@ public:
 	{
 		return clear(Root);
 	}
-	//void erase(int Data)
-	//{
-	//	return erase(Data, Root);
-	//}
+	void erase(int Data)
+	{
+		return erase(Data, Root);
+	}
 	Tree& operator=(const Tree& other)
 	{
 		if (this->Root == other.Root) return *this;
 		clear();
-		this->Root = new Element(other.Root->Data);
-		copy(other.Root->pLeft);
-		copy(other.Root->pRight);
+		copy(other.Root);
 		cout << "CopyAssignment:\t" << this << endl;
 		return *this;
 	}
@@ -104,43 +102,39 @@ public:
 
 private:
 
-	//void erase(int Data, Element* Root)
-	//{
-	//	if (Root == nullptr)return;
-	//	erase(Data, Root->pLeft);
-	//	erase(Data, Root->pRight);
-	//	if (Root->Data == Data)
-	//	{
-	//		if (Root->pLeft != nullptr || Root->pRight != nullptr)
-	//		{
-	//			Element* Erased = Root;
-	//			clear(Root);
-	//			Root = new Element(Root->pRight->Data);
- //   			copy(Erased->pLeft);
-	//			copy(Erased->pRight);
-	//			delete Erased;
-	//		}
-	//		else if (Root->pLeft != nullptr && Root->pRight == nullptr)
-	//		{
-	//			Element* Erased = Root;
-	//			clear(Root);
-	//			Root = new Element(Root->pLeft->Data);
-	//			copy(Erased->pLeft);
-	//			copy(Erased->pRight);
-	//			delete Erased;
-	//		}
-	//		else Root = nullptr;
-	//		
-	//		//delete Erased;
-	//	}
-	//}
+	void erase(int Data, Element*& Root)
+	{
+		if (Root == nullptr)return;
+		erase(Data, Root->pLeft);
+		erase(Data, Root->pRight);
+		if (Data == Root->Data)
+		{
+			if (Root->pLeft == Root->pRight)
+			{
+				delete Root;
+				Root = nullptr;
+			}
+			else
+			{
+				if (count(Root->pLeft) > count(Root->pRight))
+				{
+					Root->Data = maxValue(Root->pLeft);
+					erase(maxValue(Root->pLeft), Root->pLeft);
+				}
+				else
+				{
+					Root->Data = minValue(Root->pRight);
+					erase(minValue(Root->pRight), Root->pRight);
+				}
+			}
+		}
+	}
 
 	void copy(Element* Root)
 	{
 		if (Root == nullptr)return;
-		
-		copy(Root->pLeft);
 		insert(Root->Data);
+		copy(Root->pLeft);
 		copy(Root->pRight);
 	}
 	void clear(Element* Root)
@@ -229,9 +223,16 @@ public:
 	}
 };
 
+//#define BASE_CHECK
+
 void main()
 {
 	setlocale(LC_ALL, "");
+
+#ifdef BASE_CHECK
+
+
+
 	int n;
 	cout << "Введите размер дерева: "; cin >> n;
 	Tree tree;
@@ -257,14 +258,19 @@ void main()
 	cout << "Минимальное значение в дереве: " << uniquetree.minValue() << endl;
 	cout << "Максимальное значение в дереве: " << uniquetree.maxValue() << endl;
 	cout << "Количество элементов в дереве: " << uniquetree.count() << endl;
+#endif // BASE_CHECK
 	Tree tree3 = { 50, 25, 75, 16, 35 };
 	tree3.print();
 
-	tree3 = tree;
+	//tree3 = tree;
+	//tree3.print();
+	//Tree tree4 = tree;
+	//tree4.print();
+	int n;
+	cout << "Введите удаляемое число: "; cin >> n;
+	tree3.erase(n);
 	tree3.print();
-	Tree tree4 = tree;
-	tree4.print();
-	/*cout << "Введите удаляемое число: "; cin >> n;
-	tree4.erase(n);
-	tree4.print();*/
+	Tree tree;
+	tree = tree3;
+	tree3.print();
 }
