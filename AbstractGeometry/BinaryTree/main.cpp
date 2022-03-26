@@ -86,7 +86,10 @@ public:
 	{
 		return clear(Root);
 	}
-
+	//void erase(int Data)
+	//{
+	//	return erase(Data, Root);
+	//}
 	Tree& operator=(const Tree& other)
 	{
 		if (this->Root == other.Root) return *this;
@@ -101,9 +104,41 @@ public:
 
 private:
 
+	//void erase(int Data, Element* Root)
+	//{
+	//	if (Root == nullptr)return;
+	//	erase(Data, Root->pLeft);
+	//	erase(Data, Root->pRight);
+	//	if (Root->Data == Data)
+	//	{
+	//		if (Root->pLeft != nullptr || Root->pRight != nullptr)
+	//		{
+	//			Element* Erased = Root;
+	//			clear(Root);
+	//			Root = new Element(Root->pRight->Data);
+ //   			copy(Erased->pLeft);
+	//			copy(Erased->pRight);
+	//			delete Erased;
+	//		}
+	//		else if (Root->pLeft != nullptr && Root->pRight == nullptr)
+	//		{
+	//			Element* Erased = Root;
+	//			clear(Root);
+	//			Root = new Element(Root->pLeft->Data);
+	//			copy(Erased->pLeft);
+	//			copy(Erased->pRight);
+	//			delete Erased;
+	//		}
+	//		else Root = nullptr;
+	//		
+	//		//delete Erased;
+	//	}
+	//}
+
 	void copy(Element* Root)
 	{
 		if (Root == nullptr)return;
+		
 		copy(Root->pLeft);
 		insert(Root->Data);
 		copy(Root->pRight);
@@ -229,4 +264,7 @@ void main()
 	tree3.print();
 	Tree tree4 = tree;
 	tree4.print();
+	/*cout << "Введите удаляемое число: "; cin >> n;
+	tree4.erase(n);
+	tree4.print();*/
 }
